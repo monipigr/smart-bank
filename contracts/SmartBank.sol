@@ -4,6 +4,8 @@ pragma solidity ^0.8.24;
 
 contract SmartBank {
 
+    string public constant name = "Smart Bank";
+
     uint256 public maxBalance;
     address public admin;
     mapping(address => uint256) public userBalance; 
@@ -40,6 +42,10 @@ contract SmartBank {
 
     function modifyMaxBalance(uint256 newMaxBalance_) external onlyAdmin {
         maxBalance = newMaxBalance_;
+    }
+
+    function balanceOf(address addr_) external view returns(uint256) {
+        return userBalance[addr_];
     }
 
 }
