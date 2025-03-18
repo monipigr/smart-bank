@@ -1,32 +1,19 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router";
 import "./App.css";
 import "./provider.js";
 import "./components/ButtonConnect/ButtonConnect.jsx";
-import ButtonConnect from "./components/ButtonConnect/ButtonConnect.jsx";
+import Welcome from "./pages/Welcome/Welcome.jsx";
+import Dashboard from "./pages/Dashboard/Dashboard.jsx";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-      </div>
-      <ButtonConnect></ButtonConnect>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Welcome></Welcome>}></Route>
+        <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

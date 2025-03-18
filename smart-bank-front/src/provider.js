@@ -45,3 +45,9 @@ export const getAdminAddress = async () => {
   const adminAddress = await contract.admin();
   return adminAddress;
 };
+
+export const getUserBalance = async (addr) => {
+  const userBalance = await contract.userBalance(addr);
+  console.log("User Balance function: ", ethers.formatEther(userBalance));
+  return ethers.formatEther(userBalance);
+};
