@@ -3,7 +3,7 @@ import { getUserBalance } from "../../provider";
 import { Button, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
-export const BalanceCard = () => {
+export const DepositWithdrawCard = () => {
   const [walletAddress, setWalletAddress] = useState("");
   const [userBalance, setUserBalance] = useState(null);
 
@@ -15,23 +15,26 @@ export const BalanceCard = () => {
   return (
     <div className="card balance">
       <div className="title">
-        <p className="text-2xl">Consultar Balance</p>
+        <p className="text-2xl">Depósitos y Retiros</p>
       </div>
 
       <p className="text-sm font-semibold text-zinc-400 mt-1">
-        Consulta el balance de cualquier dirección en SmartBank
+        Gestiona tus fondos de manera segura en SmartBank
       </p>
 
       <div className="info-detail mt-5">
-        <p className="text-sm font-semibold mt-1">Dirección Ethereum </p>
+        <p className="text-sm font-semibold mt-1">Cantidad a depositar</p>
         <div className="flex flex-col gap-5 mt-3">
           <TextField
-            placeholder="0x..."
+            placeholder="0.0 ETH"
             variant="outlined"
             fullWidth
             value={walletAddress}
             onChange={(e) => setWalletAddress(e.target.value)}
-            sx={{ backgroundColor: "whitesmoke", borderRadius: "16px" }}
+            sx={{
+              backgroundColor: "whitesmoke",
+              borderRadius: "16px",
+            }}
           ></TextField>
           <Button
             variant="contained"
@@ -45,7 +48,7 @@ export const BalanceCard = () => {
             }}
           >
             <SearchIcon sx={{ marginRight: "8px" }}></SearchIcon>
-            Consultar balance
+            Depositar ETH
           </Button>
         </div>
         <p className="text-sm font-semibold mt-4">
@@ -55,11 +58,11 @@ export const BalanceCard = () => {
         </p>
 
         <p className="text-sm font-semibold text-zinc-400 mt-5">
-          Solo podrás consultar balances almacenados en SmartBank
+          Todas las transacciones están registradas en la blockchain
         </p>
       </div>
     </div>
   );
 };
 
-export default BalanceCard;
+export default DepositWithdrawCard;

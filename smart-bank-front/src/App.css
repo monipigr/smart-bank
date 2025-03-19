@@ -68,7 +68,15 @@ body {
     .title {
       display: flex;
       justify-content: space-between;
-      /* justify-content: center; */
     }
+  }
+}
+
+/* INPUT */
+.MuiTextField-root {
+  background-color: whitesmoke;
+  border-radius: 16px;
+  .MuiOutlinedInput-root {
+    border-radius: 16px !important;
   }
 }

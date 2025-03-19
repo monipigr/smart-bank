@@ -1,34 +1,28 @@
-import { useState } from "react";
-import {
-  connect,
-  getContractName,
-  getMaxBalance,
-  getAdminAddress,
-} from "../../provider";
-import { Button, TextField } from "@mui/material";
+import { useEffect, useState } from "react";
+import { connect, getContractInfo } from "../../provider";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import PasswordIcon from "@mui/icons-material/Password";
 
 export const InfoCard = () => {
-  //   const [loading, setLoading] = useState(false);
-  const [contractName, setContractName] = useState("");
-  const [adminAddress, setAdminAddress] = useState("");
-  const [maxBalance, setMaxBalance] = useState("");
+  const [toggleVisibility, setToggleVisibility] = useState(false);
+  const [contractInfo, setContractInfo] = useState({});
+
+  useEffect(() => {
+    loadContractInfo();
+  }, []);
+
+  const loadContractInfo = async () => {
+    await connect();
+    const contractInfo = await getContractInfo();
+    setContractInfo(contractInfo);
+  };
 
   const handleInfoBank = async () => {
     try {
-      //   setLoading(true);
-      await connect();
-      const contractName = await getContractName();
-      setContractName(contractName);
-      const adminAddress = await getAdminAddress();
-      setAdminAddress(adminAddress);
-      const maxBalance = await getMaxBalance();
-      setMaxBalance(maxBalance);
+      setToggleVisibility(!toggleVisibility);
     } catch (error) {
       console.log(error);
-    } finally {
-      //   setLoading(false);
     }
   };
 
@@ -36,39 +30,60 @@ export const InfoCard = () => {
     <div className="card info">
       <div className="title">
         <p className="text-2xl">Información del Banco</p>
-        <VisibilityIcon onClick={handleInfoBank}></VisibilityIcon>
+        {toggleVisibility ? (
+          <VisibilityIcon
+            sx={{ cursor: "pointer" }}
+            onClick={handleInfoBank}
+          ></VisibilityIcon>
+        ) : (
+          <VisibilityOffIcon onClick={handleInfoBank}></VisibilityOffIcon>
+        )}
       </div>
 
       <p className="text-sm font-semibold text-zinc-400 mt-1">
-        Información detallada sobre el contrato de SmartBank
+        Información detallada sobre el contrato SmartBank
       </p>
 
       <div className="info-detail mt-5">
-        <p className="text-sm font-semibold text-zinc-400 mt-1">
-          Nombre comercial{" "}
-        </p>
-        <p className="font-bold">{contractName}</p>
+        <p className="text-sm font-semibold text-zinc-400 mt-1">Nombre legal</p>
+        {toggleVisibility ? (
+          <p className="font-bold">{contractInfo.contractName}</p>
+        ) : (
+          <PasswordIcon></PasswordIcon>
+        )}
       </div>
 
       <div className="info-detail mt-5">
         <p className="text-sm font-semibold text-zinc-400 mt-1">
-          Dirección de contrato{" "}
+          Dirección de contrato
         </p>
-        <p className="font-bold">{0x000}(todo)</p>
+        {toggleVisibility ? (
+          <p className="font-bold">{contractInfo.contractAddress}</p>
+        ) : (
+          <PasswordIcon></PasswordIcon>
+        )}
       </div>
 
       <div className="info-detail mt-5">
         <p className="text-sm font-semibold text-zinc-400 mt-1">
-          Administrador{" "}
+          Administrador
         </p>
-        <p className="font-bold">{adminAddress}</p>
+        {toggleVisibility ? (
+          <p className="font-bold">{contractInfo.adminAddress}</p>
+        ) : (
+          <PasswordIcon></PasswordIcon>
+        )}
       </div>
 
       <div className="info-detail mt-5">
         <p className="text-sm font-semibold text-zinc-400 mt-1">
-          Balance máximo{" "}
+          Balance máximo
         </p>
-        <p className="font-bold">{maxBalance} ETH</p>
+        {toggleVisibility ? (
+          <p className="font-bold">{contractInfo.maxBalance} ETH</p>
+        ) : (
+          <PasswordIcon></PasswordIcon>
+        )}
       </div>
     </div>
   );
