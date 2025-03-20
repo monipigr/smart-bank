@@ -69,6 +69,32 @@ body {
       display: flex;
       justify-content: space-between;
     }
+    .tab {
+      display: flex;
+      justify-content: space-evenly;
+      display: flex;
+      justify-content: space-evenly;
+      .deposit,
+      .withdraw {
+        font-weight: bold;
+        width: 100%;
+        align-self: center;
+        justify-self: center;
+        text-align: center;
+        padding: 8px;
+        cursor: pointer;
+      }
+      .active {
+        border-bottom: 2px solid rgb(3, 79, 255);
+        border-bottom: 2px solid #1a76d2;
+        color: rgb(3, 79, 255);
+        color: #1a76d2;
+      }
+      .no-active {
+        border-bottom: 2px solid whitesmoke;
+        color: white;
+      }
+    }
   }
 }
 

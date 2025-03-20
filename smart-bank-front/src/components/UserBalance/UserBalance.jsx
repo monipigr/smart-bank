@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { getBalance } from "../../provider";
+import {
+  getBalance,
+  subscribeDepositEvent,
+  subscribeWithdrawEvent,
+} from "../../provider";
 
 export const UserBalance = () => {
   const [balance, setBalance] = useState(0);
@@ -9,7 +13,21 @@ export const UserBalance = () => {
   useEffect(() => {
     loadBalance();
     getEtherPrice();
-  }, [etherPrice, balance]);
+
+    const unsubscribeWithdraw = subscribeWithdrawEvent((user, amount) => {
+      console.log("Nuevo retiro: ", { user, amount });
+      loadBalance();
+    });
+    const unsubscribeDeposit = subscribeDepositEvent((user, amount) => {
+      console.log("Nuevo depósito detectado", { user, amount });
+      loadBalance();
+    });
+
+    return () => {
+      unsubscribeDeposit();
+      unsubscribeWithdraw();
+    };
+  });
 
   const getEtherPrice = async () => {
     try {
@@ -39,7 +57,7 @@ export const UserBalance = () => {
       <p className="text-3xl text-left">{balance} ETH</p>
       {!error ? (
         <p className="text-sm font-semibold text-zinc-400 text-left">
-          {balance / etherPrice} €
+          {(balance * etherPrice).toFixed(2)} €
         </p>
       ) : (
         <p className="text-sm font-semibold text-red-300 text-left">{error}</p>
