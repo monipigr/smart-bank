@@ -9,7 +9,7 @@ export const UserBalance = () => {
   useEffect(() => {
     loadBalance();
     getEtherPrice();
-  }, [etherPrice]);
+  }, [etherPrice, balance]);
 
   const getEtherPrice = async () => {
     try {
@@ -17,7 +17,6 @@ export const UserBalance = () => {
         "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=eur"
       );
       const data = await response.json();
-      console.log("data", data);
       const ether = data?.ethereum?.eur;
       setEtherPrice(ether);
     } catch (error) {
