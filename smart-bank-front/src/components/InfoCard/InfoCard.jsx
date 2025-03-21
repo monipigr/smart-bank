@@ -1,29 +1,50 @@
 import { useEffect, useState } from "react";
-import { connect, getContractInfo } from "../../provider";
+import { connect, getContractInfo, setMaxBalance } from "../../provider";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import PasswordIcon from "@mui/icons-material/Password";
+import { Button, TextField } from "@mui/material";
 
 export const InfoCard = () => {
   const [toggleVisibility, setToggleVisibility] = useState(false);
   const [contractInfo, setContractInfo] = useState({});
+  const [displayInput, setDisplayInput] = useState(false);
+  const [amount, setAmount] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     loadContractInfo();
   }, []);
 
   const loadContractInfo = async () => {
-    await connect();
-    const contractInfo = await getContractInfo();
-    setContractInfo(contractInfo);
+    try {
+      await connect();
+      const contractInfo = await getContractInfo();
+      setContractInfo(contractInfo);
+    } catch (error) {
+      console.error("ERROR", error);
+      setError("Fallo al obtener la información");
+    }
   };
 
   const handleInfoBank = async () => {
     try {
       setToggleVisibility(!toggleVisibility);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
+  };
+
+  const handleDisplayInput = () => {
+    setDisplayInput(!displayInput);
+  };
+
+  const handleMaxBalance = async () => {
+    if (!amount || isNaN(amount)) {
+      console.error("Por favor, ingresa una cantidad válida.");
+      return;
+    }
+    setMaxBalance(amount);
   };
 
   return (
@@ -46,7 +67,11 @@ export const InfoCard = () => {
 
       <div className="info-detail mt-5">
         <p className="text-sm font-semibold text-zinc-400 mt-1">Nombre legal</p>
-        {toggleVisibility ? (
+        {toggleVisibility && error ? (
+          <p className="font-semibold text-sm text-red-400 mt-1 mb-1">
+            {error}
+          </p>
+        ) : toggleVisibility ? (
           <p className="font-bold">{contractInfo.contractName}</p>
         ) : (
           <PasswordIcon></PasswordIcon>
@@ -57,7 +82,11 @@ export const InfoCard = () => {
         <p className="text-sm font-semibold text-zinc-400 mt-1">
           Dirección de contrato
         </p>
-        {toggleVisibility ? (
+        {toggleVisibility && error ? (
+          <p className="font-semibold text-sm text-red-400 mt-1 mb-1">
+            {error}
+          </p>
+        ) : toggleVisibility ? (
           <p className="font-bold">{contractInfo.contractAddress}</p>
         ) : (
           <PasswordIcon></PasswordIcon>
@@ -68,7 +97,11 @@ export const InfoCard = () => {
         <p className="text-sm font-semibold text-zinc-400 mt-1">
           Administrador
         </p>
-        {toggleVisibility ? (
+        {toggleVisibility && error ? (
+          <p className="font-semibold text-sm text-red-400 mt-1 mb-1">
+            {error}
+          </p>
+        ) : toggleVisibility ? (
           <p className="font-bold">{contractInfo.adminAddress}</p>
         ) : (
           <PasswordIcon></PasswordIcon>
@@ -79,10 +112,40 @@ export const InfoCard = () => {
         <p className="text-sm font-semibold text-zinc-400 mt-1">
           Balance máximo
         </p>
-        {toggleVisibility ? (
+        {toggleVisibility && error ? (
+          <p className="font-semibold text-sm text-red-400 mt-1 mb-1">
+            {error}
+          </p>
+        ) : toggleVisibility ? (
           <p className="font-bold">{contractInfo.maxBalance} ETH</p>
         ) : (
           <PasswordIcon></PasswordIcon>
+        )}
+        <p
+          className="text-xs text-zinc-400 underline"
+          onClick={handleDisplayInput}
+        >
+          Modificar
+        </p>
+        {displayInput && (
+          <div className="flex mt-1 gap-1">
+            <TextField
+              className="maxBalance"
+              placeholder="0.0 ETH"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+            ></TextField>
+            <Button
+              sx={{
+                textTransform: "none",
+                fontWeight: "bold",
+              }}
+              variant="contained"
+              onClick={handleMaxBalance}
+            >
+              Modificar
+            </Button>
+          </div>
         )}
       </div>
     </div>

@@ -4,7 +4,7 @@ import { connect } from "../../provider";
 import { Button } from "@mui/material";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 
-export const ButtonConnect = () => {
+export const ButtonConnect = ({ styles, title }) => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -27,8 +27,9 @@ export const ButtonConnect = () => {
         onClick={handleConnect}
         loading={loading}
         startIcon={<AccountBalanceWalletOutlinedIcon />}
+        sx={styles}
       >
-        Conectar Wallet
+        {title}
       </Button>
     </>
   );

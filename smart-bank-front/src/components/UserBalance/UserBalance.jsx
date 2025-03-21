@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import {
   getBalance,
-  subscribeDepositEvent,
-  subscribeWithdrawEvent,
+  // subscribeDepositEvent,
+  // subscribeWithdrawEvent,
 } from "../../provider";
 
 export const UserBalance = () => {
@@ -14,19 +14,19 @@ export const UserBalance = () => {
     loadBalance();
     getEtherPrice();
 
-    const unsubscribeWithdraw = subscribeWithdrawEvent((user, amount) => {
-      console.log("Nuevo retiro: ", { user, amount });
-      loadBalance();
-    });
-    const unsubscribeDeposit = subscribeDepositEvent((user, amount) => {
-      console.log("Nuevo depósito detectado", { user, amount });
-      loadBalance();
-    });
+    // const unsubscribeWithdraw = subscribeWithdrawEvent((user, amount) => {
+    //   console.log("Nuevo retiro: ", { user, amount });
+    //   loadBalance();
+    // });
+    // const unsubscribeDeposit = subscribeDepositEvent((user, amount) => {
+    //   console.log("Nuevo depósito", { user, amount });
+    //   loadBalance();
+    // });
 
-    return () => {
-      unsubscribeDeposit();
-      unsubscribeWithdraw();
-    };
+    // return () => {
+    //   unsubscribeDeposit();
+    //   unsubscribeWithdraw();
+    // };
   });
 
   const getEtherPrice = async () => {
@@ -44,9 +44,14 @@ export const UserBalance = () => {
   };
 
   const loadBalance = async () => {
-    const balance = await getBalance();
-    setBalance(balance);
-    return balance;
+    try {
+      const balance = await getBalance();
+      setBalance(balance);
+      return balance;
+    } catch (error) {
+      console.error("ERROR", error);
+      setError("No se pudo obtener tu balance");
+    }
   };
 
   return (

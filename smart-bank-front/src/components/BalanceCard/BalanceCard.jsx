@@ -6,10 +6,19 @@ import SearchIcon from "@mui/icons-material/Search";
 export const BalanceCard = () => {
   const [walletAddress, setWalletAddress] = useState("");
   const [userBalance, setUserBalance] = useState(null);
+  const [error, setError] = useState("");
 
   const handleCheckBalance = async () => {
-    const userBalance = await getUserBalance(walletAddress);
-    setUserBalance(userBalance);
+    try {
+      const userBalance = await getUserBalance(walletAddress);
+      setUserBalance(userBalance);
+    } catch (e) {
+      console.error(e);
+      setError("Fallo al consultar el balance");
+      setTimeout(() => {
+        setError("");
+      }, 5000);
+    }
   };
 
   return (
@@ -21,9 +30,11 @@ export const BalanceCard = () => {
       <p className="text-sm font-semibold text-zinc-400 mt-1">
         Consulta el balance de cualquier dirección en SmartBank
       </p>
-
       <div className="info-detail mt-5">
-        <p className="text-sm font-semibold mt-1">Dirección Ethereum </p>
+        <div className="flex mt-1 justify-between">
+          <p className="text-sm font-semibold mt-1">Dirección Ethereum </p>
+          {error && <p className="text-sm font-bold text-red-400">{error}</p>}
+        </div>
         <div className="flex flex-col gap-5 mt-3">
           <TextField
             placeholder="0x..."

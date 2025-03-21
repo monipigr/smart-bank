@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { Button, TextField } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
 import VerticalAlignBottomOutlinedIcon from "@mui/icons-material/VerticalAlignBottomOutlined";
 import UpgradeOutlinedIcon from "@mui/icons-material/UpgradeOutlined";
 import { depositEther, withdrawEther } from "../../provider";
@@ -12,7 +10,7 @@ export const DepositWithdrawCard = () => {
   const [transactionStatus, setTransactionStatus] = useState({
     success: false,
     error: false,
-    message: "Default",
+    message: "",
   });
 
   const handleToggleDeposit = () => {
@@ -24,7 +22,6 @@ export const DepositWithdrawCard = () => {
   };
 
   const handleDepositEther = async () => {
-    console.log("handledepositether amount", amount);
     try {
       await depositEther(amount);
       setTransactionStatus({
@@ -42,13 +39,12 @@ export const DepositWithdrawCard = () => {
       setTransactionStatus({
         success: false,
         error: false,
-        message: "Default",
+        message: "",
       });
-    }, 20000);
+    }, 5000);
   };
 
   const handleWithdrawEther = async () => {
-    console.log("Withdraw");
     try {
       await withdrawEther(amount);
       setTransactionStatus({
@@ -68,7 +64,7 @@ export const DepositWithdrawCard = () => {
         error: false,
         message: "Default",
       });
-    }, 20000);
+    }, 5000);
   };
 
   return (
@@ -113,7 +109,7 @@ export const DepositWithdrawCard = () => {
             setAmount={setAmount}
             title={"Cantidad a depositar"}
             textButton={"Depositar ETH"}
-            // icon={VerticalAlignBottomOutlinedIcon}
+            icon={VerticalAlignBottomOutlinedIcon}
           ></TransactionInput>
         ) : (
           <TransactionInput
@@ -123,7 +119,7 @@ export const DepositWithdrawCard = () => {
             setAmount={setAmount}
             title={"Cantidad a retirar"}
             textButton={"Retirar ETH"}
-            // icon={UpgradeOutlinedIcon}
+            icon={UpgradeOutlinedIcon}
           ></TransactionInput>
         )}
 

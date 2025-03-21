@@ -1,9 +1,5 @@
 import React from "react";
 import { Button, TextField } from "@mui/material";
-import VerticalAlignBottomOutlinedIcon from "@mui/icons-material/VerticalAlignBottomOutlined";
-import UpgradeOutlinedIcon from "@mui/icons-material/UpgradeOutlined";
-
-import SearchIcon from "@mui/icons-material/Search";
 
 export const TransactionInput = ({
   transactionStatus,
@@ -12,6 +8,7 @@ export const TransactionInput = ({
   setAmount,
   title,
   textButton,
+  icon,
 }) => {
   return (
     <>
@@ -31,6 +28,7 @@ export const TransactionInput = ({
       <div className="flex flex-col gap-5 mt-3">
         <TextField
           placeholder="0.0 ETH"
+          type="number"
           variant="outlined"
           fullWidth
           value={amount}
@@ -51,7 +49,7 @@ export const TransactionInput = ({
             padding: "13px 14px",
           }}
         >
-          <SearchIcon sx={{ marginRight: "8px" }}></SearchIcon>
+          {icon && React.createElement(icon, { sx: { marginRight: "8px" } })}
           {textButton}
         </Button>
       </div>

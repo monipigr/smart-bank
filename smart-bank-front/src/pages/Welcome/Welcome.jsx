@@ -15,7 +15,7 @@ export const Welcome = () => {
         </div>
         <p className="mt-4 mb-2">Connecta tu wallet para comenzar.</p>
       </div>
-      <ButtonConnect></ButtonConnect>
+      <ButtonConnect title={"Conecta tu billetera"}></ButtonConnect>
     </div>
   );
 };
