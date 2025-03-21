@@ -59,16 +59,11 @@ export const BalanceCard = () => {
             Consultar balance
           </Button>
         </div>
-
-        {setTimeout(() => {
-          userBalance ? (
-            <p className="text-sm font-semibold mt-4 text-green-200">
-              `El saldo de la billetera ${walletAddress} es ${userBalance}`
-            </p>
-          ) : (
-            ""
-          );
-        }, 5000)}
+        <p className="text-sm font-semibold mt-4 text-green-200">
+          {userBalance
+            ? `El saldo de ${walletAddress} es de ${userBalance} ETH`
+            : ""}
+        </p>
 
         <p className="text-sm font-semibold text-zinc-400 mt-5">
           Solo podrás consultar balances almacenados en SmartBank
