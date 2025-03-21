@@ -59,10 +59,12 @@ export const BalanceCard = () => {
             Consultar balance
           </Button>
         </div>
-        <p className="text-sm font-semibold mt-4">
-          {userBalance
-            ? `El saldo de la billetera ${walletAddress} es ${userBalance}`
-            : ""}
+        <p className="text-sm font-semibold mt-4 text-green-200">
+          {setTimeout(() => {
+            userBalance
+              ? `El saldo de la billetera ${walletAddress} es ${userBalance}`
+              : "";
+          }, 5000)}
         </p>
 
         <p className="text-sm font-semibold text-zinc-400 mt-5">
