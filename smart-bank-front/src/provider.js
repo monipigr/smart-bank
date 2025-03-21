@@ -7,26 +7,26 @@ let provider;
 let signer;
 let contract;
 
-// export const connect = async () => {
-//   try {
-//     if (window.ethereum == null) {
-//       console.log("MetaMask not installed; using read-only defaults");
-//       provider = ethers.getDefaultProvider();
-//     } else {
-//       provider = new ethers.BrowserProvider(window.ethereum);
-//       contract = new ethers.Contract(contractAddress, abi, provider);
-//       signer = await provider.getSigner();
-//       console.log("signer", signer);
-//       console.log("Contract:", contract);
-//     }
-//   } catch (error) {
-//     console.error("Error connecting to Metamask:", error);
-//   }
-// };
-
 export const connect = async () => {
-  console.log("FAKE CONNECT");
+  try {
+    if (window.ethereum == null) {
+      console.log("MetaMask not installed; using read-only defaults");
+      provider = ethers.getDefaultProvider();
+    } else {
+      provider = new ethers.BrowserProvider(window.ethereum);
+      contract = new ethers.Contract(contractAddress, abi, provider);
+      signer = await provider.getSigner();
+      console.log("signer", signer);
+      console.log("Contract:", contract);
+    }
+  } catch (error) {
+    console.error("Error connecting to Metamask:", error);
+  }
 };
+
+// export const connect = async () => {
+//   console.log("FAKE CONNECT");
+// };
 
 export const getContractName = async () => {
   const name = await contract.name();
