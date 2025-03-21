@@ -106,3 +106,10 @@ body {
     border-radius: 16px !important;
   }
 }
+.MuiTextField-root.maxBalance {
+  /* border: 1px solid red !important; */
+  border-radius: 8px;
+  input {
+    padding: 6px !important;
+  }
+}

@@ -12,9 +12,7 @@ export const TransactionInput = ({
   setAmount,
   title,
   textButton,
-  icon,
 }) => {
-  console.log("props transactionStatus", icon);
   return (
     <>
       <div className="flex mt-1 justify-between">
