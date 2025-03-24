@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { connect, getContractInfo, setMaxBalance } from "../../provider";
+import { getContractInfo, setMaxBalance } from "../../provider";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import PasswordIcon from "@mui/icons-material/Password";
@@ -11,6 +11,11 @@ export const InfoCard = () => {
   const [displayInput, setDisplayInput] = useState(false);
   const [amount, setAmount] = useState("");
   const [error, setError] = useState("");
+  const [status, setStatus] = useState({
+    success: false,
+    error: false,
+    message: "",
+  });
 
   useEffect(() => {
     loadContractInfo();
@@ -18,12 +23,10 @@ export const InfoCard = () => {
 
   const loadContractInfo = async () => {
     try {
-      await connect();
       const contractInfo = await getContractInfo();
       setContractInfo(contractInfo);
     } catch (error) {
-      console.error("ERROR", error);
-      setError("Fallo al obtener la información");
+      setError(`${error}`);
     }
   };
 
@@ -40,11 +43,36 @@ export const InfoCard = () => {
   };
 
   const handleMaxBalance = async () => {
-    if (!amount || isNaN(amount)) {
-      console.error("Por favor, ingresa una cantidad válida.");
+    if (!amount || isNaN(amount) || amount < 0.001 || amount > 2) {
+      setStatus({
+        error: true,
+        message: "Por favor, ingresa una cantidad entre 0.001 y 2",
+      });
       return;
     }
-    setMaxBalance(amount);
+    try {
+      console.log("try");
+
+      setStatus({ success: false, error: false, message: "" });
+      const tx = await setMaxBalance(amount);
+      await tx.wait();
+      await loadContractInfo();
+      setStatus({
+        success: true,
+        message: "Balance máximo modificado",
+      });
+    } catch (e) {
+      console.error(e);
+      setStatus({
+        error: true,
+        message: "Ha habido un error",
+      });
+    } finally {
+      setTimeout(() => {
+        setDisplayInput(false);
+        setStatus({ success: false, error: false, message: "" });
+      }, 10000);
+    }
   };
 
   return (
@@ -68,7 +96,7 @@ export const InfoCard = () => {
       <div className="info-detail mt-5">
         <p className="text-sm font-semibold text-zinc-400 mt-1">Nombre legal</p>
         {toggleVisibility && error ? (
-          <p className="font-semibold text-sm text-red-400 mt-1 mb-1">
+          <p className="font-semibold text-sm text-red-300 mt-1 mb-1">
             {error}
           </p>
         ) : toggleVisibility ? (
@@ -83,7 +111,7 @@ export const InfoCard = () => {
           Dirección de contrato
         </p>
         {toggleVisibility && error ? (
-          <p className="font-semibold text-sm text-red-400 mt-1 mb-1">
+          <p className="font-semibold text-sm text-red-300 mt-1 mb-1">
             {error}
           </p>
         ) : toggleVisibility ? (
@@ -98,7 +126,7 @@ export const InfoCard = () => {
           Administrador
         </p>
         {toggleVisibility && error ? (
-          <p className="font-semibold text-sm text-red-400 mt-1 mb-1">
+          <p className="font-semibold text-sm text-red-300 mt-1 mb-1">
             {error}
           </p>
         ) : toggleVisibility ? (
@@ -113,7 +141,7 @@ export const InfoCard = () => {
           Balance máximo
         </p>
         {toggleVisibility && error ? (
-          <p className="font-semibold text-sm text-red-400 mt-1 mb-1">
+          <p className="font-semibold text-sm text-red-300 mt-1 mb-1">
             {error}
           </p>
         ) : toggleVisibility ? (
@@ -128,24 +156,42 @@ export const InfoCard = () => {
           Modificar
         </p>
         {displayInput && (
-          <div className="flex mt-1 gap-1">
-            <TextField
-              className="maxBalance"
-              placeholder="0.0 ETH"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-            ></TextField>
-            <Button
-              sx={{
-                textTransform: "none",
-                fontWeight: "bold",
-              }}
-              variant="contained"
-              onClick={handleMaxBalance}
-            >
-              Modificar
-            </Button>
-          </div>
+          <>
+            <div className="flex mt-1 gap-1">
+              <TextField
+                type="number"
+                min="0.0001"
+                max="1"
+                className="maxBalance"
+                placeholder="0.0 ETH"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                sx={{
+                  "& fieldset": { border: "none" },
+                }}
+              ></TextField>
+              <Button
+                sx={{
+                  textTransform: "none",
+                  fontWeight: "bold",
+                }}
+                variant="contained"
+                onClick={handleMaxBalance}
+              >
+                Modificar
+              </Button>
+            </div>
+            {status.success && (
+              <p className="text-xs font-bold text-green-200 mt-1">
+                {status.message}
+              </p>
+            )}
+            {status.error && (
+              <p className="text-xs font-bold text-red-300 mt-1">
+                {status.message}
+              </p>
+            )}
+          </>
         )}
       </div>
     </div>

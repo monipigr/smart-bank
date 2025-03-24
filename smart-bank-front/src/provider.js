@@ -44,6 +44,9 @@ export const getAdminAddress = async () => {
 };
 
 export const getContractInfo = async () => {
+  if (!signer || !contract) {
+    throw new Error("No se pudo obtener la información. Conecta tu billetera");
+  }
   const contractName = await contract.name();
   const contractAddress = "0x514268F23BBCEf6ec190f9DC1B2aDCDC30b13563";
   const adminAddress = await contract.admin();
@@ -57,11 +60,17 @@ export const getContractInfo = async () => {
 };
 
 export const getUserBalance = async (addr) => {
+  if (!signer || !contract) {
+    throw new Error("Conecta tu billetera");
+  }
   const userBalance = await contract.userBalance(addr);
   return ethers.formatEther(userBalance);
 };
 
 export const getBalance = async () => {
+  if (!signer || !contract) {
+    throw new Error("Conecta tu billetera");
+  }
   const accounts = await window.ethereum.request({
     method: "eth_requestAccounts",
   });
@@ -71,14 +80,15 @@ export const getBalance = async () => {
 
 export const setMaxBalance = async (amount) => {
   const contractWithSigner = contract.connect(signer);
-  const newMaxBalance = await contractWithSigner.modifyMaxBalance(amount);
-  await newMaxBalance.wait();
-  return newMaxBalance;
+  const amountInWei = ethers.parseUnits(amount.toString(), 18);
+  const tx = await contractWithSigner.modifyMaxBalance(amountInWei);
+  await tx.wait();
+  return tx;
 };
 
 export const depositEther = async (amount) => {
   if (!signer || !contract) {
-    throw new Error("Connect to MetaMask");
+    throw new Error("Conecta tu billetera");
   }
   // Crear una instancia del contrato con el signer para firmar la transacción
   const contractWithSigner = contract.connect(signer);
@@ -92,7 +102,7 @@ export const depositEther = async (amount) => {
 
 export const subscribeDepositEvent = (callback) => {
   if (!contract) {
-    throw new Error("Connect to MetaMask");
+    throw new Error("Conecta tu billetera");
   }
   contract.on("EtherDeposit", (user, amount) => {
     callback(user, amount);
@@ -104,7 +114,7 @@ export const subscribeDepositEvent = (callback) => {
 
 export const withdrawEther = async (amount) => {
   if (!signer || !contract) {
-    throw new Error("Connect to MetaMask");
+    throw new Error("Conecta tu billetera");
   }
   const contractWithSigner = contract.connect(signer);
   const tx = await contractWithSigner.withdrawEther(
@@ -115,7 +125,7 @@ export const withdrawEther = async (amount) => {
 
 export const subscribeWithdrawEvent = (callback) => {
   if (!contract) {
-    throw new Error("Connect to MetaMask");
+    throw new Error("Conecta tu billetera");
   }
   contract.on("EtherWithdraw", (user, amount) => {
     callback(user, amount);

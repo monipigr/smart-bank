@@ -1,6 +1,8 @@
 import React from "react";
 import ButtonConnect from "../../components/ButtonConnect/ButtonConnect";
 import SmartBankLogo from "../../assets/LogoBg.png";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { Link } from "react-router";
 
 export const Welcome = () => {
   return (
@@ -16,6 +18,17 @@ export const Welcome = () => {
         <p className="mt-4 mb-2">Connecta tu wallet para comenzar.</p>
       </div>
       <ButtonConnect title={"Conecta tu billetera"}></ButtonConnect>
+      <Link to="/dashboard">
+        <div className="flex justify-center gap-2 mt-4 cursor-pointer text-white">
+          <p className="font-bold"> Continuar sin conectar</p>
+          <ArrowForwardIcon></ArrowForwardIcon>
+        </div>
+      </Link>
+      <div className="disclaimer text-center p-3 text-sm text-red-300 ">
+        <strong>Entorno de test</strong>
+        <br></br> Esta plataforma funciona en la red de pruebas Sepolia. Todas
+        las transacciones utilizan ETH de prueba sin valor real.
+      </div>
     </div>
   );
 };

@@ -20,7 +20,7 @@ export const TransactionInput = ({
           </p>
         )}
         {transactionStatus.error && (
-          <p className="text-sm font-bold text-red-400 mt-5">
+          <p className="text-sm font-bold text-red-300 mt-5">
             {transactionStatus.message}
           </p>
         )}

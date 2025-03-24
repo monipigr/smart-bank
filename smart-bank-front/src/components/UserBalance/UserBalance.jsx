@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router";
 import {
   getBalance,
   // subscribeDepositEvent,
   // subscribeWithdrawEvent,
 } from "../../provider";
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 
 export const UserBalance = () => {
   const [balance, setBalance] = useState(0);
@@ -49,8 +51,7 @@ export const UserBalance = () => {
       setBalance(balance);
       return balance;
     } catch (error) {
-      console.error("ERROR", error);
-      setError("No se pudo obtener tu balance");
+      setError(`${error}`);
     }
   };
 
@@ -65,7 +66,16 @@ export const UserBalance = () => {
           {(balance * etherPrice).toFixed(2)} €
         </p>
       ) : (
-        <p className="text-sm font-semibold text-red-300 text-left">{error}</p>
+        <div className="flex gap-1 items-center">
+          <p className="text-sm font-semibold text-red-300 text-left">
+            {error}
+          </p>
+          <Link to="/">
+            <AccountBalanceWalletIcon
+              sx={{ fontSize: "large", cursor: "pointer", color: "white" }}
+            ></AccountBalanceWalletIcon>
+          </Link>
+        </div>
       )}
     </div>
   );

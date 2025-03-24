@@ -29,10 +29,9 @@ export const DepositWithdrawCard = () => {
         message: `Transacción de ${amount} realizada con éxita`,
       });
     } catch (error) {
-      console.error(error);
       setTransactionStatus({
         error: true,
-        message: `Error en la transacción`,
+        message: `${error}`,
       });
     }
     setTimeout(() => {
@@ -41,6 +40,7 @@ export const DepositWithdrawCard = () => {
         error: false,
         message: "",
       });
+      setAmount("");
     }, 5000);
   };
 
@@ -52,10 +52,9 @@ export const DepositWithdrawCard = () => {
         message: `Transacción de ${amount} realizada con éxita`,
       });
     } catch (error) {
-      console.error(error);
       setTransactionStatus({
         error: true,
-        message: `Error en la transacción`,
+        message: `${error}`,
       });
     }
     setTimeout(() => {
@@ -64,6 +63,7 @@ export const DepositWithdrawCard = () => {
         error: false,
         message: "Default",
       });
+      setAmount("");
     }, 5000);
   };
 
