@@ -91,8 +91,6 @@ export const setMaxBalance = async (amount) => {
   const accounts = await window.ethereum.request({
     method: "eth_requestAccounts",
   });
-  console.log("adminAddress:", adminAddress);
-  console.log("accounts:", accounts[0]);
   if (adminAddress.toLowerCase() !== accounts[0].toLowerCase()) {
     throw new Error("Solo el administrador puede modificar el balance máximo");
   }
