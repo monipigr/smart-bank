@@ -5,7 +5,6 @@ import SmartBankLogo from "../../assets/LogoBg.png";
 import BalanceCard from "../../components/BalanceCard/BalanceCard";
 import DepositWithdrawCard from "../../components/DepositWithdrawCard/DepositWithdrawCard";
 import UserBalance from "../../components/UserBalance/UserBalance";
-import ButtonConnect from "../../components/ButtonConnect/ButtonConnect";
 
 export const Dashboard = () => {
   return (

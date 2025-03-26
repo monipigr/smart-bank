@@ -63,7 +63,7 @@ export const UserBalance = () => {
       <p className="text-3xl text-left">{balance} ETH</p>
       {!error ? (
         <p className="text-sm font-semibold text-zinc-400 text-left">
-          {(balance * etherPrice).toFixed(2)} €
+          equivale a {(balance * etherPrice).toFixed(2)} €
         </p>
       ) : (
         <div className="flex gap-1 items-center">

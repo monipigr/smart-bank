@@ -43,16 +43,7 @@ export const InfoCard = () => {
   };
 
   const handleMaxBalance = async () => {
-    if (!amount || isNaN(amount) || amount < 0.001 || amount > 2) {
-      setStatus({
-        error: true,
-        message: "Por favor, ingresa una cantidad entre 0.001 y 2",
-      });
-      return;
-    }
     try {
-      console.log("try");
-
       setStatus({ success: false, error: false, message: "" });
       const tx = await setMaxBalance(amount);
       await tx.wait();
@@ -61,11 +52,11 @@ export const InfoCard = () => {
         success: true,
         message: "Balance máximo modificado",
       });
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      console.error(error);
       setStatus({
         error: true,
-        message: "Ha habido un error",
+        message: `${error}`,
       });
     } finally {
       setTimeout(() => {

@@ -7,11 +7,13 @@ export const BalanceCard = () => {
   const [walletAddress, setWalletAddress] = useState("");
   const [userBalance, setUserBalance] = useState(null);
   const [error, setError] = useState("");
+  const [displayBalance, setDisplayBalance] = useState(false);
 
   const handleCheckBalance = async () => {
     try {
       const userBalance = await getUserBalance(walletAddress);
       setUserBalance(userBalance);
+      setDisplayBalance(true);
     } catch (error) {
       setError(`${error}`);
       setTimeout(() => {
@@ -19,6 +21,9 @@ export const BalanceCard = () => {
       }, 5000);
     } finally {
       setWalletAddress("");
+      setTimeout(() => {
+        setDisplayBalance(false);
+      }, 10000);
     }
   };
 
@@ -61,7 +66,9 @@ export const BalanceCard = () => {
           </Button>
         </div>
         <p className="text-sm font-semibold mt-4 text-green-200">
-          {userBalance ? `El saldo es de ${userBalance} ETH` : ""}
+          {userBalance && displayBalance
+            ? `El saldo es de ${userBalance} ETH`
+            : ""}
         </p>
         <p className="text-sm font-semibold text-zinc-400 mt-5">
           Solo podrás consultar balances almacenados en SmartBank

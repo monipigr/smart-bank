@@ -26,7 +26,7 @@ export const DepositWithdrawCard = () => {
       await depositEther(amount);
       setTransactionStatus({
         success: true,
-        message: `Transacción de ${amount} realizada con éxita`,
+        message: `Transacción de ${amount} ETH realizada con éxito`,
       });
     } catch (error) {
       setTransactionStatus({
@@ -49,7 +49,7 @@ export const DepositWithdrawCard = () => {
       await withdrawEther(amount);
       setTransactionStatus({
         success: true,
-        message: `Transacción de ${amount} realizada con éxita`,
+        message: `Transacción de ${amount} ETH realizada con éxito`,
       });
     } catch (error) {
       setTransactionStatus({
@@ -61,7 +61,7 @@ export const DepositWithdrawCard = () => {
       setTransactionStatus({
         success: false,
         error: false,
-        message: "Default",
+        message: "",
       });
       setAmount("");
     }, 5000);
