@@ -5,15 +5,18 @@ import "./provider.js";
 import "./components/ButtonConnect/ButtonConnect.jsx";
 import Welcome from "./pages/Welcome/Welcome.jsx";
 import Dashboard from "./pages/Dashboard/Dashboard.jsx";
+import { AppProvider } from "./context/AppContext.jsx";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Welcome></Welcome>}></Route>
-        <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
-      </Routes>
-    </BrowserRouter>
+    <AppProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Welcome></Welcome>}></Route>
+          <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
+        </Routes>
+      </BrowserRouter>
+    </AppProvider>
   );
 }
 

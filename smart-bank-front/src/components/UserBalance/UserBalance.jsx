@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { AppContext } from "../../context/AppContext";
 import { Link } from "react-router";
-import {
-  getBalance,
-  // subscribeDepositEvent,
-  // subscribeWithdrawEvent,
-} from "../../provider";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 
 export const UserBalance = () => {
-  const [balance, setBalance] = useState(0);
   const [etherPrice, setEtherPrice] = useState(0);
   const [error, setError] = useState("");
+
+  const { balance, loadBalance } = useContext(AppContext);
 
   useEffect(() => {
     loadBalance();
@@ -29,7 +26,7 @@ export const UserBalance = () => {
     //   unsubscribeDeposit();
     //   unsubscribeWithdraw();
     // };
-  });
+  }, [balance, loadBalance]);
 
   const getEtherPrice = async () => {
     try {
@@ -42,16 +39,6 @@ export const UserBalance = () => {
     } catch (error) {
       setError("Fallo al obtener los datos");
       console.error(error);
-    }
-  };
-
-  const loadBalance = async () => {
-    try {
-      const balance = await getBalance();
-      setBalance(balance);
-      return balance;
-    } catch (error) {
-      setError(`${error}`);
     }
   };
 

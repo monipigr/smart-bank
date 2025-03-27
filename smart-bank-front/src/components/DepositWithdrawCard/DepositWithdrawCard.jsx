@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AppContext } from "../../context/AppContext";
 import VerticalAlignBottomOutlinedIcon from "@mui/icons-material/VerticalAlignBottomOutlined";
 import UpgradeOutlinedIcon from "@mui/icons-material/UpgradeOutlined";
 import { depositEther, withdrawEther } from "../../provider";
 import TransactionInput from "../TransactionInput/TransactionInput";
 
 export const DepositWithdrawCard = () => {
+  const { loadBalance } = useContext(AppContext);
+
   const [toggle, setToggle] = useState("deposit");
   const [amount, setAmount] = useState("");
   const [transactionStatus, setTransactionStatus] = useState({
@@ -33,6 +36,8 @@ export const DepositWithdrawCard = () => {
         error: true,
         message: `${error}`,
       });
+    } finally {
+      await loadBalance();
     }
     setTimeout(() => {
       setTransactionStatus({
@@ -56,6 +61,8 @@ export const DepositWithdrawCard = () => {
         error: true,
         message: `${error}`,
       });
+    } finally {
+      await loadBalance();
     }
     setTimeout(() => {
       setTransactionStatus({
