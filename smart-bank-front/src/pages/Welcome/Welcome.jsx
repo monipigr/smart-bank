@@ -26,8 +26,8 @@ export const Welcome = () => {
       </Link>
       <div className="disclaimer text-center p-3 text-sm text-red-300 ">
         <strong>Entorno de test</strong>
-        <br></br> Esta plataforma funciona en la red de pruebas Sepolia. Todas
-        las transacciones utilizan ETH de prueba sin valor real.
+        <br></br> Esta plataforma funciona en la red de pruebas Arbitrum
+        Sepolia. Todas las transacciones utilizan ETH de prueba sin valor real.
       </div>
     </div>
   );
