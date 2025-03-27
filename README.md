@@ -17,11 +17,11 @@
 
 👉 [https://smart-bank-one.vercel.app/](https://smart-bank-one.vercel.app/)
 
-<!-- <div style="text-align:center">
+<div style="text-align:center">
   <a href="https://smart-bank-one.vercel.app/" target="_blank">
-    <img src="./smart-bank-front/public/ demo.gif" width="400" style="border:1px solid #808080; border-radius:8px"/>
+    <img src="./smart-bank-front/public/demo.gif" width="400" style="border:1px solid #808080; border-radius:8px"/>
   </a>
-</div> -->
+</div>
 
 ## 🛠️ Tech Stack
 
