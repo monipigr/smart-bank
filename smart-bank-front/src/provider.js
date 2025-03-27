@@ -16,8 +16,6 @@ export const connect = async () => {
       provider = new ethers.BrowserProvider(window.ethereum);
       contract = new ethers.Contract(contractAddress, abi, provider);
       signer = await provider.getSigner();
-      console.log("signer", signer);
-      console.log("Contract:", contract);
     }
   } catch (error) {
     console.error("Error connecting to Metamask:", error);
