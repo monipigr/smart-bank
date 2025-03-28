@@ -33,7 +33,7 @@
   - Ethers.js (Frontend integration)
   - Infura (Reliable blockchain node access)
 - **Deployment**:
-  - Smart Contract: Remix IDE → Arbiscan Sepolia
+  - Smart Contract: Remix IDE → [Arbiscan Sepolia](https://sepolia.arbiscan.io/address/0xc08ba5c29763cc58c4edd6cce99be1b401d5390a)
   - Frontend: Vercel
 
 ## 🚀 How to Use
