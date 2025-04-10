@@ -9,3 +9,10 @@ node_modules
 # solidity-coverage files
 /coverage
 /coverage.json
+
+# foundry 
+lib
+foundry/lib
+foundry/out
+foundry/cache
+test.yml
